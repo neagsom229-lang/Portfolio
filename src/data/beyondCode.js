@@ -21,14 +21,14 @@ const beyondCode = [
       'A set of graphic design pieces — social posts, posters, and branding explorations — created for personal and academic projects.',
     image: '',
   },
-  {
-    id: 2,
-    title: 'Content Planning & Scheduling',
-    category: 'Content',
-    description:
-      'Editorial calendars and content plans built to keep posting consistent and on-message across platforms.',
-    image: '',
-  },
+ {
+  id: 2,
+  title: 'Digital Work Changes Behavior',
+  category: 'Digital Work',
+  description:
+     'Digital work changes behavior through faster communication, greater visibility, data-driven decisions, distributed teams, and blurred work-life boundaries.',
+  image: 'assets/img/beyondCode/image.png',
+},
   {
     id: 3,
     title: 'Social Media Content Kit',

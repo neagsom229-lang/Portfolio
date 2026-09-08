@@ -8,9 +8,10 @@
     "build": "vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-     "postinstall": "chmod +x node_modules/.bin/vite"
+    "postinstall": "chmod +x node_modules/.bin/vite"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "aos": "^2.3.4",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
@@ -24,5 +25,4 @@
     "oxlint": "^1.71.0",
     "vite": "^8.1.1"
   }
-  
 }

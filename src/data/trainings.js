@@ -5,7 +5,7 @@ const trainings = [
     date: 'Jan 2025 – Mar 2025',
     org: 'Western University',
     description:
-      'Participated in an IT student trip organized by our professor, combining learning, networking, and a relaxing break. We received valuable advice about developing our skills and building a successful career in technology.',
+      'A student trip organized by our faculty, blending hands-on learning with real-world networking. Key takeaways:\n• Practical guidance on building a career in tech\n• Networking with peers and industry-minded professors\n• A reset for creativity — balancing hard work with rest',
     images: [
       '/assets/img/training/image.png',
       '/assets/img/training/image2.jpg',
@@ -16,12 +16,12 @@ const trainings = [
   },
   {
     id: 2,
-    title: 'comming soon',
-    date: '',
+    title: 'Coming Soon',
+    date: 'Coming ',
     org: '',
     description:
-      '',
-    images: [], // no photos yet — will show the placeholder
+      'Upcoming advanced workshop on cloud infrastructure and scalable systems.',
+    images: [],
     certificateUrl: '',
     certificateLabel: '',
   },

@@ -1,8 +1,14 @@
 import { useEffect, useState } from 'react';
+import emailjs from '@emailjs/browser';
 
-// Any button anywhere in the app can open this widget by dispatching:
-//   window.dispatchEvent(new Event('open-message-popup'))
-// See the "Send Me a Message" button in sections/Contact.jsx.
+// EmailJS Configuration - FIXED
+const EMAILJS_CONFIG = {
+  PUBLIC_KEY: "AEsAC3UstlEZRZPAS",
+  SERVICE_ID: "service_v4kcdkg",
+  TEMPLATE_ID: "template_t98woo3",
+  TO_EMAIL: "chheangsamnang.wu@gmail.com", // ✅ This must exist
+};
+
 export const OPEN_MESSAGE_POPUP_EVENT = 'open-message-popup';
 
 export default function MessagePopup() {
@@ -20,18 +26,50 @@ export default function MessagePopup() {
     return () => window.removeEventListener(OPEN_MESSAGE_POPUP_EVENT, handleOpen);
   }, []);
 
+  useEffect(() => {
+    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+  }, []);
+
   if (!open) return null;
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('loading');
-    setTimeout(() => {
+
+    // ✅ LOG THIS to verify it exists
+    console.log('TO_EMAIL:', EMAILJS_CONFIG.TO_EMAIL);
+
+    const templateParams = {
+      to_email: EMAILJS_CONFIG.TO_EMAIL, // ✅ Must be a valid email string
+      from_name: form.name,
+      from_email: form.email,
+      message: form.message,
+    };
+
+    console.log('📤 Sending with params:', templateParams); // ✅ Check what's being sent
+
+    try {
+      const response = await emailjs.send(
+        EMAILJS_CONFIG.SERVICE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID,
+        templateParams
+      );
+
+      console.log('✅ Email sent successfully:', response);
       setStatus('sent');
       setForm({ name: '', email: '', message: '' });
       setTimeout(() => setStatus('idle'), 4000);
-    }, 700);
+    } catch (error) {
+      console.error('❌ Email send failed:', {
+        status: error.status,
+        text: error.text,
+        message: error.message,
+      });
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 4000);
+    }
   };
 
   return (
@@ -93,8 +131,24 @@ export default function MessagePopup() {
             </p>
           )}
 
-          <button type="submit" className="message-popup-send" disabled={status === 'loading'}>
-            {status === 'loading' ? 'Sending...' : (<>Send Message <i className="bi bi-arrow-right"></i></>)}
+          {status === 'error' && (
+            <p className="message-popup-status message-popup-status-error">
+              <i className="bi bi-exclamation-circle"></i> Failed to send. Please try again later.
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="message-popup-send"
+            disabled={status === 'loading' || status === 'sent'}
+          >
+            {status === 'loading' ? (
+              <>Sending <i className="bi bi-hourglass-split"></i></>
+            ) : status === 'sent' ? (
+              <>Sent <i className="bi bi-check-circle"></i></>
+            ) : (
+              <>Send Message <i className="bi bi-arrow-right"></i></>
+            )}
           </button>
         </form>
       )}
